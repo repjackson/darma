@@ -1,0 +1,16 @@
+.ui.card
+    .image
+        a(href="/profile/#{_id}")
+            img.ui.fluid.image(src="{{c.url profile.image_id height=400 width=800 background='white' crop='pad'}}")
+    .content
+        a(href="/profile/#{_id}")
+            h2.ui.center.aligned.header #{profile.first_name} #{profile.last_name}
+        each five_tags
+            .ui.compact.small.circular.button.person_tag(class=tag_class) 
+                strong #{this}
+    .extra.content
+        .ui.horizontal.divider.header
+            i.red.configure.icon
+            | Admin
+        +check_in_button
+        +edit_profile_button
