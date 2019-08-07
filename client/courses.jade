@@ -1,37 +1,36 @@
-template(name='buildings')
+template(name='courses')
     .ui.stackable.padded.grid
-        each buildings
-            .four.wide.column
-                a(href="/building/#{slug}")
-                    .ui.segment.home_segment
-                        //- img.ui.circular.tiny.image(src="{{c.url image width=400 height=200 crop='fill'}}")
-                        .ui.large.header #{building_code}
-                            each building_numbers
-                                .ui.basic.label #{this}
-                        .ui.grey.small.header #{building_street}
+        .three.column.row
+            each courses
+                .column
+                    a(href="/course/#{slug}")
+                        .ui.segment.home_segment
+                            //- img.ui.circular.tiny.image(src="{{c.url image width=400 height=200 crop='fill'}}")
+                            .ui.large.header #{title}
+                            .ui.grey.small.header !{description}
                 
                 
-template(name='building')
+template(name='course')
     .ui.padded.stackable.grid
         .ui.three.wide.column
-            a.ui.big.button(href="/buildings")
+            a.ui.big.button(href="/courses")
                 i.chevron.left.icon
-                i.building.icon
+                i.course.icon
                 //- +i name='apartment' classes='ui inline mini image'
-                |buildings
+                |courses
             if is_dev
                 .ui.icon.input
                     i.home.icon
                     input.unit_number(type='number' placeholder='unit number')
                 .ui.icon.input
-                    i.building.icon
-                    input.building_number(type='number' placeholder='unit building number')
+                    i.course.icon
+                    input.course_number(type='number' placeholder='unit course number')
                 .ui.icon.input
                     i.header.icon
-                    input.building_label(type='text' placeholder='unit building label')
+                    input.course_label(type='text' placeholder='unit course label')
 
-            h1.ui.header building #{building.building_code}
-            each building.building_numbers
+            h1.ui.header course #{title}
+            each course.course_numbers
                 .ui.basic.label #{this}
         .ui.thirteen.wide.column
             .ui.three.cards
@@ -44,7 +43,7 @@ template(name='unit_card')
     a.ui.card(href="/unit/#{_id}")
         .content
             .ui.large.header #{unit_number}
-            //- .ui.small.header building #{building_code}
+            //- .ui.small.header course #{course_code}
             //- a.ui.large.button(href="/unit/#{_id}")
             //-     i.yellow.right.chevron.icon
             div
@@ -71,6 +70,6 @@ template(name='unit_card')
             //-         .ui.basic.label #{license_plate}
             .ui.small.header #{notes}
             if is_dev
-                +number_view key='building_number' direct=true
+                +number_view key='course_number' direct=true
                 +number_view key='unit_number' direct=true
                     

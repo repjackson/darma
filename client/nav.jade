@@ -6,34 +6,30 @@ template(name='nav')
             //-     i.large.sidebar.icon
             if is_loading
                 .icon.item
-                    i.big.loading.yin.yang.icon
+                    i.big.loading.grey.yin.yang.icon
             else
-                a.icon.item(href='/home' class="{{isActivePath '/home'}}")
-                    i.th.large.icon
-                if is_staff
-                    a.icon.item(href='/buildings' class="{{isActivePath '/buildings'}}")
-                        //- i.building.large.icon
-                        +i name='building'
-                        .mobile.hidden &nbsp; buildings
-                if is_staff
-                    a.icon.item(href='/staff' class="{{isActivePath '/staff'}}")
-                        //- i.shield.large.icon
-                        +i name='user-shield'
-                        .mobile.hidden &nbsp; staff
-                    a.icon.item(href='/users' class="{{isActivePath '/users'}}")
-                        //- i.users.large.icon
-                        +i name='groups'
-                        .mobile.hidden &nbsp; users
-                if is_manager
-                    a.icon.item(href='/manager' class="{{isActivePath '/manager'}}")
-                        //- i.shield.large.icon
-                        +i name='user-shield'
-                        .mobile.hidden &nbsp; manager
-                if is_staff
-                    a.icon.item(href='/healthclub' class="{{isActivePath '/healthclub'}}")
-                        //- i.clinic.medical.large.icon
-                        +i name='treadmill'
-                        .mobile.hidden &nbsp; kiosk
+                a.item(href='/home' class="{{isActivePath '/home'}}")
+                    img.ui.small.image(src="https://chirayadharma.com/wp-content/uploads/elementor/thumbs/Chireya_Dharma_PINK-2019-LOGO-BODONIpng-o5d1xlsn4e7gn27vsqgqyrd0q2bv7smp1szkhrv5mu.png")
+                a.icon.item(href='/courses' class="{{isActivePath '/courses'}}")
+                    //- i.building.large.icon
+                    +i name='university'
+                    .mobile.hidden &nbsp; courses
+                a.icon.item(href='/staff' class="{{isActivePath '/staff'}}")
+                    //- i.shield.large.icon
+                    +i name='user-shield'
+                    .mobile.hidden &nbsp; staff
+                a.icon.item(href='/users' class="{{isActivePath '/users'}}")
+                    //- i.users.large.icon
+                    +i name='groups'
+                    .mobile.hidden &nbsp; users
+                //- a.icon.item(href='/manager' class="{{isActivePath '/manager'}}")
+                //-     //- i.shield.large.icon
+                //-     +i name='user-shield'
+                //-     .mobile.hidden &nbsp; manager
+                //- a.icon.item(href='/healthclub' class="{{isActivePath '/healthclub'}}")
+                //-     //- i.clinic.medical.large.icon
+                //-     +i name='treadmill'
+                //-     .mobile.hidden &nbsp; kiosk
             .right.menu
                 if currentUser
                     unless logging_out

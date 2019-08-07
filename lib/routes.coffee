@@ -25,7 +25,7 @@ Router.route '/inbox', -> @render 'inbox'
 Router.route '/register', -> @render 'register'
 Router.route '/admin', -> @render 'admin'
 Router.route '/dashboard', -> @render 'dashboard'
-Router.route '/buildings', -> @render 'buildings'
+Router.route '/courses', -> @render 'courses'
 Router.route '/manager', -> @render 'manager'
 Router.route '/shift_checklist', -> @render 'shift_checklist'
 
@@ -40,7 +40,7 @@ Router.route '/events', (->
     ), name:'events'
 
 Router.route '/unit/:unit_id', -> @render 'unit'
-Router.route '/building/:building_code', -> @render 'building'
+Router.route '/course/:course_code', -> @render 'course'
 
 Router.route('enroll', {
     path: '/enroll-account/:token'
