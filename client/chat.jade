@@ -6,14 +6,13 @@ template(name='chat_messages_pane')
     if in_chat
         .ui.icon.fluid.attached.input
             i.chevron.right.icon
-            input.add_message(type='text' placeholder='Add Message...')
+            input.add_message(type='text' placeholder='add message...')
                 
 template(name='chat_list')
     div
     .ui.small.inline.header channels
-    .ui.icon.basic.button#create_chat(title='New Channel')
+    .ui.icon.basic.button#create_chat(title='new channel')
         i.plus.icon
-
     .ui.segments
         each chat_list_items
             +chat_list_item
@@ -94,7 +93,7 @@ template(name='chat_message')
                 span.date #{when}
             .text
                 if read
-                    | #{body}
+                    | {{nl2br body}}
                 else 
                     strong #{body}
             .actions
@@ -149,7 +148,7 @@ template(name='view_chat')
                 .ui.cloud.segment
                     .ui.small.header 
                         i.line.chart.icon
-                        |Stats
+                        |stats
                     //- .ui.small.inline.header #{message_count} messages
                     //- .ui.small.inline.header #{unread_message_count} unread
                     +text_edit key='title' direct=true
@@ -158,17 +157,17 @@ template(name='view_chat')
                         |description
                     |!{content}
                     .ui.small.header
-                        |Participants
+                        |participants
                     if currentUser
                         if in_chat
                             //- i.sign.in.link.icon.leave_chat(title='leave')
                             .ui.basic.button.leave_chat
                                 i.sign.in.icon
-                                |Leave
+                                |leave
                         else
                             .ui.basic.button.join_chat
                                 i.sign.out.icon
-                                |Join
+                                |join
                     .ui.relaxed.list
                         each participants
                             .item
@@ -186,7 +185,7 @@ template(name='view_chat')
                     if can_edit
                         .ui.icon.basic.button.close_chat(title='close chat')
                             i.ban.icon
-                            |Close Chat
+                            |close chat
                     if can_edit
                         +array_edit key='tags' label='tags' direct=true
                     else     
@@ -203,6 +202,6 @@ template(name='view_chat')
                     //- +resonates_list
                     if can_edit
                         +boolean_edit key='private' label='private' direct=true
-                    .ui.small.header Started by 
+                    .ui.small.header started by 
                         img.ui.avatar.image(src="{{c.url author.image_id width=400 height=400 gravity='face' crop='fill'}}")
                         |#{author.username} #{when}

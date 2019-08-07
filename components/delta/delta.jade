@@ -4,8 +4,7 @@ template(name='delta')
             .row
                 .five.wide.column
                     .ui.inline.header
-                        i.icon(class=icon)
-                        //- +i name=icon
+                        +i name=icon
                         | #{title}
                     unless is_loading
                         if currentUser
@@ -109,7 +108,7 @@ template(name='delta_result')
         if template_exists
             +Template.dynamic template=model_template
         else
-            .ui.result.cloud.card(class=loading_class)
+            .ui.result.cloud.segment(class=loading_class)
                 .content
                     each fields
                         +Template.dynamic template=view_template 

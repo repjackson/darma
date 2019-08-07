@@ -4,21 +4,20 @@ template(name='model_edit')
             .centered.row
                 .six.wide.column
                     .ui.header(title="model: #{model}")
-                        |#{title}
+                        |edit #{title}
                     +creation_info
-                    h1.ui.header edit model
-                    .ui.center.aligned.basic.segment
-                        a.ui.huge.icon.basic.button(href="/m/#{slug}")
-                            i.big.checkmark.icon
-                        #delete_model.ui.icon.basic.button
-                            i.trash.icon
+                    a.ui.huge.icon.basic.button(href="/m/#{slug}")
+                        i.big.checkmark.icon
+                    #delete_model.ui.icon.basic.button
+                        i.trash.icon
                     .ui.form
                         +text_edit key='title' label='title' direct=true
-                        +text_edit key='slug' label='slug' direct=true
+                        +slug_edit key='slug' label='slug' direct=true
                         +icon_edit key='icon' label='icon' direct=true
                         +textarea_edit key='description' label='description' direct=true
                         +array_edit key='tags' label='tags' direct=true
                         +text_edit key='collection' label='collection' direct=true
+                        +boolean_edit key='nav' label='top nav' direct=true
                         +multi_doc_edit key='view_roles' label='view roles' ref_model='role' direct=true
                         +multi_doc_edit key='actions' label='actions' ref_model='action' direct=true
                 .ten.wide.column
@@ -123,6 +122,7 @@ template(name='field_edit')
     .content
         +text_edit key='title' direct=true label='title'        
         +text_edit key='key'  direct=true label='key'           
+        +textarea_edit key='description'  direct=true           
         //- +text_edit key='field_type' direct=true label='Field Type'              
         +icon_edit key='icon' direct=true label='icon'              
         +text_edit key='field_type' ref_model='field_type' label='field type' direct=true                 

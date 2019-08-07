@@ -16,33 +16,7 @@ if Meteor.isClient
             Meteor.call 'set_facets', 'note', ->
                 Session.set 'loading', false
 
-        'click .set_units': ->
-            Session.set 'loading', true
-            Meteor.call 'set_facets', 'unit', ->
-                Session.set 'loading', false
-
-        'click .set_shop': ->
-            Session.set 'loading', true
-            Meteor.call 'set_facets', 'shop', ->
-                Session.set 'loading', false
-
-        'click .set_library': ->
-            Session.set 'loading', true
-            Meteor.call 'set_facets', 'library', ->
-                Session.set 'loading', false
-
-        'click .set_event': ->
-            Session.set 'loading', true
-            Meteor.call 'set_facets', 'event', ->
-                Session.set 'loading', false
-
-        'click .set_task': ->
-            Session.set 'loading', true
-            Meteor.call 'set_facets', 'task', ->
-                Session.set 'loading', false
-
-
-        'click .set_bookmarked_model': ->
+        'click .set_nav_model': ->
             Session.set 'loading', true
             Meteor.call 'set_facets', @slug, ->
                 Session.set 'loading', false
@@ -72,6 +46,7 @@ if Meteor.isClient
 
     Template.nav.onCreated ->
         @autorun -> Meteor.subscribe 'me'
+        @autorun -> Meteor.subscribe 'model_docs', 'model'
         # @autorun -> Meteor.subscribe 'current_session'
         # @autorun -> Meteor.subscribe 'unread_messages'
 
@@ -79,10 +54,6 @@ if Meteor.isClient
         notifications: ->
             Docs.find
                 model:'notification'
-
-        models: ->
-            Docs.find
-                model:'model'
 
         unread_count: ->
             unread_count = Docs.find({
@@ -106,11 +77,10 @@ if Meteor.isClient
             if unread_count then 'red' else ''
 
 
-        bookmarked_models: ->
-            if Meteor.userId()
-                Docs.find
-                    model:'model'
-                    bookmark_ids:$in:[Meteor.userId()]
+        nav_models: ->
+            Docs.find
+                model:'model'
+                nav:true
 
     # Template.nav.onRendered ->
     #     Meteor.setTimeout ->

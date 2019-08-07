@@ -28,10 +28,10 @@ template(name='inline_doc')
             else
                 div(class=doc_classes)
                     |{{nl2br body}}
-            if is_staff
+            if is_admin
                 +session_edit_icon
     else
-        if is_staff
+        if is_admin
             .ui.header no doc found
             .create_doc.ui.basic.inline.button
                 i.plus.icon

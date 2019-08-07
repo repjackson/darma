@@ -73,18 +73,18 @@ template(name='color_icon_view')
 template(name='icon_view')
     if field_value
         div
-        i.icon(class=field_value)
-        //- img(src="https://img.icons8.com/color/48/000000/#{field_value}.png")
+        //- i.icon(class=field_value)
+        img(src="https://img.icons8.com/color/48/000000/#{field_value}.png")
 
 
 template(name='i')
-    img(src="https://img.icons8.com/office/48/000000/#{name}.png" class=classes title=title)
+    img(src="https://img.icons8.com/color/48/000000/#{name}.png" class=classes title=title)
     //- img(src="https://img.icons8.com/color/48/000000/#{name}.png" class=classes title=title)
-    //- img(src="https://img.icons8.com/office/48/000000/#{name}.png" class=classes title=title)
+    //- img(src="https://img.icons8.com/color/48/000000/#{name}.png" class=classes title=title)
     //- img(src="https://img.icons8.com/ultraviolet/48/000000/#{name}.png" class=classes title=title)
 
 template(name='ismall')
-    img(src="https://img.icons8.com/office/24/000000/#{name}.png" class=classes title=title)
+    img(src="https://img.icons8.com/color/24/000000/#{name}.png" class=classes title=title)
     //- img(src="https://img.icons8.com/ultraviolet/24/000000/#{name}.png" class=classes title=title)
 
 template(name='iblue')
@@ -210,11 +210,6 @@ template(name='image_edit')
                 //-     input.cloudinary_id(type='text' value=field_value placeholder='cloudinary_id' autocomplete="off")
                 // else
                 //     label Upload Image
-    unless is_staff
-        .upload-btn-wrapper            
-            .btn + Add Photo (switch camera to front)
-            input(type='file' name='upload_image' accept='image/*' capture='user')
-    if is_staff            
         input(type='file' name='upload_image' accept='image/*' capture='user')
 
 template(name='image_link_edit')
@@ -234,7 +229,7 @@ template(name='image_link_view')
 template(name='textarea_view')
     if field_value
         div
-        .ui.inline.small.header
+        .ui.small.header
             if icon
                 +i name=icon
                 //- i.grey.icon(class=icon)
@@ -245,24 +240,28 @@ template(name='textarea_view')
             else if key
                 |#{key}
             else
-                |#{this}            
+                |#{this} 
+        if description           
+            | #{description}
         |{{nl2br field_value}}
 
 template(name='textarea_edit')
+    .ui.small.header 
+        if icon
+            i.icon(name=icon)
+                //- +i name=icon classes='ui avatar image'
+        if title
+            |#{title}
+        else if label
+            |#{label}
+        else if key
+            |#{key}
+        else
+            |#{this}
+    if description           
+        | #{description}                    
     .ui.form
         .field
-            label 
-                if icon
-                    i.icon(name=icon)
-                    //- +i name=icon classes='ui avatar image'
-                if title
-                    |#{title}
-                else if label
-                    |#{label}
-                else if key
-                    |#{key}
-                else
-                    |#{this}
             textarea.edit_textarea(rows='5') #{field_value}
         //- +call_watson mode='text' key=key
 
@@ -333,24 +332,26 @@ template(name='document_view')
     //-             |#{title}
     //-             i.dropdown.icon
     //-     .content 
-    if is_staff
+    if is_admin
         with referenced_document
             +edit_button
     |!{referenced_document.content}
         
 template(name='text_edit')
-    .ui.fluid.icon.input
-        .ui.small.inline.header
-            if icon
-                +i name=icon
-                //- i.grey.icon(class=icon)
-            if title
-                |#{title}
-            else if label
-                |#{label}
-            else if key
-                |#{key}
+    .ui.small.header
+        //- i.grey.icon(class=icon)
+        if title
+            |#{title}
+        else if label
+            |#{label}
+        else if key
+            |#{key}
         //- +clear_value
+    if description
+        |!{description}
+    .ui.fluid.icon.input
+        if icon
+            +i name=icon
         input.edit_text(type='text' value=field_value placeholder=placeholder autocomplete="off")
         
 
@@ -889,14 +890,14 @@ template(name='multi_doc_edit')
     div
     .ui.small.inline.header(title=key)
         if icon
-            //- +i name=icon classes='ui avatar image'
-            i.icon(class=icon)
+            +i name=icon classes='ui avatar image'
+            //- i.icon(class=icon)
         |#{title} #{label}    
     each choices
         .ui.circular.compact.button.select_choice(class=choice_class)
             if icon
-                //- +i name=icon classes='ui avatar image'
-                i.grey.icon(class=icon)
+                +i name=icon classes='ui avatar image'
+                //- i.grey.icon(class=icon)
             //- |#{title} #{slug}
             |#{slug}
     //- .ui.sub.header 

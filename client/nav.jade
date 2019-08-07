@@ -1,58 +1,47 @@
 template(name='nav')
-    unless is_frontdesk
-        //- .ui.borderless.attached.big.inverted.menu.topnav
-        .ui.attached.borderless.big.menu.topnav
-            //- a.toggle_sidebar.icon.item.sidebar_on
-            //-     i.large.sidebar.icon
-            if is_loading
-                .icon.item
-                    i.big.loading.grey.yin.yang.icon
+    .ui.attached.borderless.big.menu.topnav
+        //- a.toggle_sidebar.icon.item.sidebar_on
+        //-     i.large.sidebar.icon
+        if is_loading
+            .icon.item
+                i.big.loading.grey.yin.yang.icon
+        else
+            a.item(href='/home' class="{{isActivePath '/home'}}")
+                img.ui.small.image(src="https://chirayadharma.com/wp-content/uploads/elementor/thumbs/Chireya_Dharma_PINK-2019-LOGO-BODONIpng-o5d1xlsn4e7gn27vsqgqyrd0q2bv7smp1szkhrv5mu.png")
+            each nav_models
+                a.item.set_nav_model(href="/m/#{slug}" class="{{isActivePath '/m/#{slug}'}}")
+                    +i name=icon
+                    .mobile.hidden &nbsp; #{title}
+            a.item(href='/users' class="{{isActivePath '/users'}}")
+                +i name='groups'
+                .mobile.hidden &nbsp; people
+            a.item(href='/contact' class="{{isActivePath '/contact'}}")
+                +i name='contact'
+                .mobile.hidden &nbsp; contact
+            a.icon.item(href='/chat' class="{{isActivePath '/chat'}}")
+                +i name='chat'
+        .right.menu
+            if currentUser
+                unless logging_out
+                    if is_dev
+                        a.item.set_model(href='/m/model' class="{{isActivePath '/m/model'}}")
+                            i.sitemap.large.icon
+                    a.item(href="/user/#{currentUser.username}" class="{{isActiveRoute regex='user_chat'}}")
+                        if currentUser.image_id
+                            img.ui.avatar.image(src="{{c.url currentUser.image_id width=100 height=100 gravity='face' crop='fill'}}")
+                        else
+                            +i name='user'
+                        //- | #{currentUser.username}
+                if logging_out
+                    .item
+                        i.large.loading.circle.notch.icon
+                //- else
+                //-     a#logout.ui.mobile.hidden.icon.item(href='#' title='Log Out')
+                //-         i.sign.out.large.icon
             else
-                a.item(href='/home' class="{{isActivePath '/home'}}")
-                    img.ui.small.image(src="https://chirayadharma.com/wp-content/uploads/elementor/thumbs/Chireya_Dharma_PINK-2019-LOGO-BODONIpng-o5d1xlsn4e7gn27vsqgqyrd0q2bv7smp1szkhrv5mu.png")
-                a.icon.item(href='/courses' class="{{isActivePath '/courses'}}")
-                    //- i.building.large.icon
-                    +i name='university'
-                    .mobile.hidden &nbsp; courses
-                a.icon.item(href='/staff' class="{{isActivePath '/staff'}}")
-                    //- i.shield.large.icon
-                    +i name='user-shield'
-                    .mobile.hidden &nbsp; staff
-                a.icon.item(href='/users' class="{{isActivePath '/users'}}")
-                    //- i.users.large.icon
-                    +i name='groups'
-                    .mobile.hidden &nbsp; users
-                //- a.icon.item(href='/manager' class="{{isActivePath '/manager'}}")
-                //-     //- i.shield.large.icon
-                //-     +i name='user-shield'
-                //-     .mobile.hidden &nbsp; manager
-                //- a.icon.item(href='/healthclub' class="{{isActivePath '/healthclub'}}")
-                //-     //- i.clinic.medical.large.icon
-                //-     +i name='treadmill'
-                //-     .mobile.hidden &nbsp; kiosk
-            .right.menu
-                if currentUser
-                    unless logging_out
-                        if is_dev
-                            a.item.set_model(href='/m/model' class="{{isActivePath '/m/model'}}")
-                                i.sitemap.large.icon
-                        unless is_frontdesk
-                            a.item(href="/user/#{currentUser.username}" class="{{isActiveRoute regex='user_chat'}}")
-                                if currentUser.image_id
-                                    img.ui.avatar.image(src="{{c.url currentUser.image_id width=100 height=100 gravity='face' crop='fill'}}")
-                                else
-                                    +i name='user'
-                                //- | #{currentUser.username}
-                    if logging_out
-                        .item
-                            i.large.loading.circle.notch.icon
-                    //- else
-                    //-     a#logout.ui.mobile.hidden.icon.item(href='#' title='Log Out')
-                    //-         i.sign.out.large.icon
-                else
-                    a.item(href='/login' title='login') 
-                        i.sign.in.large.icon
-                        |login
+                a.item(href='/login' title='login') 
+                    i.sign.in.large.icon
+                    |login
 
 
 
@@ -60,9 +49,9 @@ template(name='footer')
     .ui.fluid.basic.attached.segment.footer
         .ui.container.stackable.grid
             .eight.wide.column
-                //- with currentUser
-                //-     +textarea_edit key='notes' direct=true
-                //- +health_club_info
+                a(href="https://twitter.com/chirayadharma" target="_window")
+                    +i name='twitter'
+                //- +i name=''
                 if is_dev    
                     with current_user
                         +role_switcher

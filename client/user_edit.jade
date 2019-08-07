@@ -1,0 +1,152 @@
+template(name='user_edit')
+    with user_from_username_param          
+        //- img.ui.fluid.image.banner_image(src="{{c.url banner_image_id width=1000 height=500 crop='crop'}}")    
+        .ui.stackable.padded.grid
+            .three.column.row
+                .column
+                    .ui.center.aligned.large.inline.grey.header
+                        | #{user_from_username_param.first_name} #{user_from_username_param.last_name}
+                    //- +i name='pencil'
+                    .ui.small.inline.header @#{user_from_username_param.username}
+                    a.ui.large.fluid.basic.button(href="/user/#{user_from_username_param.username}/") 
+                        i.checkmark.large.green.icon
+                        strong save
+                    .ui.hidden.divider
+                    +image_edit key='image_id' icon='picture' title='profile image' direct=true
+                    if is_admin
+                        +password_edit
+                        //- +phone_editor
+                        +username_edit
+                    if is_admin
+                        with user_from_username_param
+                            .ui.orange.basic.button.remove_user 
+                                i.remove.icon
+                                |delete user
+                .column
+                    +textarea_edit key='bio' label='bio' icon='text' direct=true
+                .column
+                    .ui.form
+                        +text_edit key='first_name' label='first name' icon='header' direct=true
+                        +text_edit key='last_name' label='last name' icon='text' direct=true
+                        .ui.segment
+                            .ui.header 
+                                i.blue.envelope.icon
+                                |email(s)
+                            +emails_edit
+                        +phone_edit key='phone' label='phone' icon='telephone' direct=true
+                        //- +image_edit key='banner_image_id' label='banner image' direct=true
+                        //- +text_edit key='tagline' label='tag line' direct=true
+                    +boolean_edit key='published' icon='eye' label='profile published'
+                    
+                    
+template(name='user_settings')
+    .ui.segment
+        .ui.header 
+            +i name='settings'
+            |settings
+        with user_from_username_param
+            +boolean_edit key='show_bookmarked_model_bar' label='show bookmarked model bar' direct=true
+
+
+template(name='user_model_editor')
+    .ui.header profile sections
+    each models
+        .ui.basic.button.toggle_model(class=user_model_class title=title)
+            i.icon(class=icon)
+            |#{title}
+            
+            
+template(name='user_single_doc_ref_editor')
+    .ui.header #{label}
+    each choices
+        .ui.basic.button.select_choice(class=choice_class title=title)
+            i.icon(class=icon)
+            |#{title}
+
+template(name='username_edit')
+    .ui.small.header 
+        i.i.cursor.icon
+        |change username [#{user_from_username_param.username}]
+    .ui.icon.fluid.input
+        input.new_username(type='text' placeholder='new username...')
+        i.play.link.icon.change_username
+
+
+     
+template(name='phone_editor')
+    .ui.small.header    
+        i.phone.icon
+        |phone
+    .ui.icon.fluid.input(title='Add Phone')
+        i.plus.icon
+        input#phone.form-control(type='phone', name='phone', value='{{newNumber}}')
+    if user_from_username_param.profile.phone
+        if user_from_username_param.profile.phone_verified
+            .ui.green.label verified
+        else
+            p
+                .ui.label not verified
+                a.resend_verification(href='#')
+                    |resend code
+                .ui.small.icon.basic.button.remove_phone(title='remove phone')
+                    i.remove.icon
+    else
+        .ui.fluid.basic.button.update_phone add phone
+
+
+
+template(name='password_edit')
+    .ui.small.grey.header
+        +i name='password'
+        |change password
+    //- .ui.fluid.input
+    //-     input#password(type='password', placeholder='old password')
+    .ui.fluid.icon.input
+        input#new_password(type='password', placeholder='new password')
+    //- .ui.fluid.basic.button.change_password
+    //-     i.refresh.icon
+    //-     |set password
+    if is_dev
+        .ui.fluid.basic.button.send_enrollment_email
+            |send enrollment email
+    .ui.fluid.basic.button.set_password
+        i.user.shield.icon
+        | set password
+            
+            
+            
+         
+         
+template(name='user_field')         
+    .ui.form
+        .field  
+            label #{label}
+            input.user_field(type='text' value=key_value)
+                        
+                        
+            
+template(name='emails_edit')
+    //- .ui.small.grey.header 
+    //-     i.envelope.icon
+    //-     | email(s)
+    //- #test_email.ui.big.basic.button test email
+    .ui.divided.list
+        each current_user.emails
+            .item 
+                // unless verified
+                //     .right.floated.content
+                //         .ui.basic.button Verify
+                .content
+                    |#{address}
+                    if verified
+                        .ui.green.label verified
+                    else
+                        .ui.label unverified
+                        .send_verification_email.ui.basic.button 
+                            |verify
+                            i.caret.right.icon
+                    .ui.small.icon.basic.button.remove_email
+                        i.remove.icon
+    .ui.action.big.fluid.input
+        input#new_email(type='email' placeholder='add new email address' autocomplete="off")
+        #add_email.ui.submit.basic.button add email

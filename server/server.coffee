@@ -1,4 +1,3 @@
-
 Meteor.users.allow
     update: (userId, doc, fields, modifier) ->
         true
@@ -10,36 +9,6 @@ Cloudinary.config
     api_key: Meteor.settings.private.cloudinary_key
     api_secret: Meteor.settings.private.cloudinary_secret
 
-
-# SyncedCron.add
-#     name: 'Update incident escalations'
-#     schedule: (parser) ->
-#         # parser is a later.parse object
-#         parser.text 'every 1 hour'
-#     job: ->
-#         Meteor.call 'update_escalation_statuses', (err,res)->
-#             # else
-
-
-SyncedCron.add({
-        name: 'check out members'
-        schedule: (parser) ->
-            parser.text 'every 2 hours'
-        job: ->
-            Meteor.call 'checkout_members', (err, res)->
-    },{
-        name: 'check leases'
-        schedule: (parser) ->
-            # parser is a later.parse object
-            parser.text 'every 24 hours'
-        job: ->
-            Meteor.call 'check_lease_status', (err, res)->
-    }
-)
-
-
-if Meteor.isProduction
-    SyncedCron.start()
 
 Meteor.publish 'model_docs', (model,limit)->
     if limit
@@ -70,12 +39,6 @@ Meteor.publish 'inline_doc', (slug)->
     Docs.find
         model:'inline_doc'
         slug:slug
-
-
-Meteor.publish 'current_session', ->
-    Docs.find
-        model: 'healthclub_session'
-        current:true
 
 
 Meteor.publish 'user_from_username', (username)->
@@ -110,13 +73,6 @@ Meteor.publish 'checkin_guests', (doc_id)->
         _id:$in:session_document.guest_ids
 
 
-Meteor.publish 'resident', (guest_id)->
-    guest = Docs.findOne guest_id
-    Meteor.users.find
-        _id:guest.resident_id
-
-
-
 Meteor.publish 'health_club_members', (username_query)->
     existing_sessions =
         Docs.find(
@@ -135,14 +91,6 @@ Meteor.publish 'health_club_members', (username_query)->
 
 
 
-
-Meteor.publish 'page_blocks', (slug)->
-    page = Docs.findOne
-        model:'page'
-        slug:slug
-    if page
-        Docs.find
-            parent_id:page._id
 
 
 Meteor.publish 'doc_tags', (selected_tags)->

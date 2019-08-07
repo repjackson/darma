@@ -2,20 +2,20 @@ template(name='login')
     .ui.padded.stackable.grid
         .centered.row
             .ten.wide.column
-                h1.ui.center.aligned.grey.header gold run login
+                h1.ui.center.aligned.purple.header login
                     //- i.massive.icons
                     //-     i.home.icon
                     //-     i.corner.right.chevron.icon
                 if message
-                    h4.ui.center.aligned.header #{message}
+                    h4.ui.center.aligned.purple.header #{message}
                 .ui.fluid.large.input(class=login_class)
-                    .ui.inline.small.grey.header 
+                    .ui.inline.small.purple.header 
                         //- +i name='user'
                         i.user.icon
                         |username
                     input.username(type='text')
                 .ui.fluid.large.input(class=login_class)
-                    .ui.inline.small.grey.header 
+                    .ui.inline.small.purple.header 
                         i.lock.icon
                         | password
                     input.password(type='password')
@@ -30,7 +30,7 @@ template(name='login')
                 else
                     if username
                         .ui.center.aligned.segment
-                            .ui.small.header no '#{username}' user
+                            .ui.small.purple.header no '#{username}' user
                             a.ui.basic.button(href='/register')
                                 i.user.plus.icon
                                 //- +i name='enter-2' classes='ui mini inline image'                    
@@ -40,7 +40,7 @@ template(name='login')
                         //- +i name='forgot-password' classes='ui mini inline image'                    
                         i.refresh.icon
                         |forgot password
-                    //- a.ui.large.basic.button(href='/register') 
-                    //-     //- +i name='add-user-male' classes='ui mini inline image'                    
-                    //-     i.user.plus.icon
-                    //-     |register
+                    a.ui.large.basic.button(href='/register') 
+                        //- +i name='add-user-male' classes='ui mini inline image'                    
+                        i.user.plus.icon
+                        |register

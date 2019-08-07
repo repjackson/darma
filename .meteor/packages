@@ -38,8 +38,6 @@ underscore@1.0.10
 coffeescript
 ecmascript
 reywood:publish-composite
-pascoual:pdfkitx
 lookback:emails
-percolate:synced-cron
 http
 modules

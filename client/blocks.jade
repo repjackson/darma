@@ -22,7 +22,7 @@ template(name='comments')
 
 
 template(name='goto_model')
-    if is_staff
+    if is_admin
         a.ui.icon.basic.button.goto_model(href="/m/#{slug}" title="goto #{slug}")
             i.external.icon
             //- +ismall name='external-link'
@@ -90,14 +90,14 @@ template(name='user_status')
 template(name='user_card')
     with user
         .ui.grid.smoothed.segment
-            if is_staff
+            if is_admin
                 .four.wide.column
                     if image_id
                         img.ui.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
             .twelve.wide.column
-                unless is_staff
+                unless is_admin
                     .header #{first_name} #{last_name} 
-                if is_staff
+                if is_admin
                     a.header(href="/user/#{username}") #{first_name} #{last_name} 
                     .meta @#{username}
                     +text_view key='address' direct=true label='Address'
@@ -135,7 +135,7 @@ template(name='big_user_card')
                      |#{first_name} #{last_name} 
                     .meta @#{username}
                     //- +array_view key='tags' label='Tags' direct=true
-            if is_staff
+            if is_admin
                 .content
                     +text_view key='address' label='address' direct=true
                     +number_view key='building_number' label='building #' direct=true
@@ -312,7 +312,7 @@ template(name='email_validation_check')
                 |#{times}
             //- else
                 //- |#{times}x sent
-        if is_staff
+        if is_admin
             .ui.button.toggle_email_verified
                 |mark email verified
         
@@ -326,7 +326,7 @@ template(name='lease_expiration_check')
         
         
 template(name='rules_and_regs_check')
-    if is_staff
+    if is_admin
         if rules_signed
             a.ui.basic.button(href="/m/rules_regs_signing/#{rules_signed._id}/view" title='click to view/edit signing document')
                 i.signature.icon
@@ -340,7 +340,7 @@ template(name='rules_and_regs_check')
     //-         .ui.large.red.basic.button.sign_rules
     //-             i.signature.icon
     //-             |click to sign rules and regulations
-        //- else if is_staff
+        //- else if is_admin
         //-     .ui.large.basic.button
         //-         i.signature.icon
         //-         |rules and regs signed 
@@ -348,7 +348,7 @@ template(name='rules_and_regs_check')
         
         
 template(name='member_guidelines_check')
-    if is_staff
+    if is_admin
         if guidelines_signed
             a.ui.basic.button(href="/m/sign_guidelines/#{guidelines_signed._id}/view" title='click to view/edit signing document')
                 i.signature.icon
@@ -362,7 +362,7 @@ template(name='member_guidelines_check')
             .ui.large.red.basic.fluid.button.sign_guidelines
                 i.signature.icon
                 | Click to Sign Member Guidelines
-    //-     else if is_staff
+    //-     else if is_admin
     //-         .ui.large.basic.button
     //-             i.signature.icon
     //-             |rules and regs signed 

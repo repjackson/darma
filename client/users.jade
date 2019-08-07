@@ -22,10 +22,7 @@
 template(name='user_item')                            
     .ui.stackable.grid.segment
         a.four.wide.column(href="/user/#{_id}/view") 
-            if kiosk_photo
-                img.ui.image(src="{{c.url kiosk_photo width=200 height=150 crop='fit'}}")
-            else if image_id
-                img.ui.image(src="{{c.url image_id width=200 height=150 crop='fit'}}")
+            img.ui.image(src="{{c.url image_id width=200 height=150 crop='fit'}}")
         .twelve.wide.column
             a.ui.header(href="/user/#{username}") 
                 |#{profile.name}
@@ -87,13 +84,7 @@ template(name='user')
                     strong #{this}
             +text_view key='first_name' label='First Name'
             +text_view key='last_name' label='Last Name'
-            +text_view key='address' label='Address'
-            +number_view key='unit_number' label='Unit #'
-            +number_view key='building_number' label='Building #'
             +text_view key='email' label='Email'
             +phone_view key='phone' label='Phone'
-            +date_view key='start_date' label='Start Date'
-            +date_view key='expiration_date' label='Expiration Date'
-            +user_check_steps            
 
             

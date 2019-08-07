@@ -399,7 +399,9 @@ Template.slug_edit.events
         doc = Docs.findOne parent._id
         Meteor.call 'slugify', page_doc._id, (err,res)=>
             Docs.update page_doc._id,
-                $set:slug:res
+                $set:
+                    slug:res
+                    key:res
 
 Template.phone_edit.events
     'blur .edit_phone': (e,t)->

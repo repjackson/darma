@@ -46,73 +46,6 @@ Template.registerHelper 'current_day', () -> moment(Date.now()).format("DD")
 # Template.registerHelper 'parent_template', () -> Template.parentData()
     # Session.get 'displaying_profile'
 
-# Template.registerHelper 'checking_in_doc', () ->
-#     Docs.findOne
-#         model:'healthclub_session'
-#         current:true
-#      # Session.get('session_document')
-
-# Template.registerHelper 'current_session_doc', () ->
-#         Docs.findOne
-#             model:'healthclub_session'
-#             current:true
-
-
-
-# Template.registerHelper 'checkin_guest_docs', () ->
-#     Docs.findOne Router.current().params.doc_id
-#     session_document = Docs.findOne Router.current().params.doc_id
-#     # console.log session_document.guest_ids
-#     Docs.find
-#         _id:$in:session_document.guest_ids
-
-
-Meteor.methods
-    submit_checkin: ->
-        Session.set 'adding_guest', false
-        healthclub_session_document = Docs.findOne Router.current().params.doc_id
-        # console.log @
-        resident = Meteor.users.findOne healthclub_session_document.user_id
-
-        # healthclub_session_document = Docs.findOne
-        #     model:'healthclub_session'
-        user = Meteor.users.findOne
-            username:resident.username
-        healthclub_session_document = Docs.findOne Router.current().params.doc_id
-        if healthclub_session_document.guest_ids.length > 0
-            # now = Date.now()
-            current_month = moment().format("MMM")
-            Meteor.users.update user._id,
-                $addToSet:
-                    total_guests:healthclub_session_document.guest_ids.length
-                    "#{current_month}_guests":healthclub_session_document.guest_ids.length
-        Docs.update healthclub_session_document._id,
-            $set:
-                # session_type:'healthclub_checkin'
-                submitted:true
-        Router.go "/healthclub"
-        $('body').toast({
-            title: "#{resident.first_name} #{resident.last_name} checked in"
-            class: 'success'
-            transition:
-                showMethod   : 'zoom',
-                showDuration : 250,
-                hideMethod   : 'fade',
-                hideDuration : 250
-        })
-
-
-
-
-Template.registerHelper 'resident_guests', () ->
-    Docs.find
-        _id:$in:@guest_ids
-
-Template.registerHelper 'is_springdale', () ->
-    console.log @
-    unit = Docs.findOne Router.current().params.unit_id
-    console.log unit
-    if unit.building_code is 'springdale' or 'sp' then true else false
 
 Template.registerHelper 'current_month_guests', () ->
     # console.log @
@@ -122,17 +55,6 @@ Template.registerHelper 'current_month_guests', () ->
 Template.registerHelper 'referenced_product', () ->
     Docs.findOne
         _id:@product_id
-
-
-Template.registerHelper 'resident_status_class', ()->
-    # console.log @
-    unless @rules_and_regs_signed
-        'red_flagged'
-    else unless @email_validated
-        'orange_flagged'
-    else ''
-
-Template.registerHelper 'available_servings', () ->
 
 
 Template.registerHelper 'author', () -> Meteor.users.findOne @_author_id
@@ -198,7 +120,7 @@ Template.registerHelper 'is_admin', () ->
         # if _.intersection(['dev','admin'], Meteor.user().roles) then true else false
         if 'admin' in Meteor.user().roles then true else false
 
-Template.registerHelper 'is_staff', () ->
+Template.registerHelper 'is_admin', () ->
     if Meteor.user() and Meteor.user().roles
         # if _.intersection(['dev','staff'], Meteor.user().roles) then true else false
         if 'staff' in Meteor.user().roles then true else false
@@ -228,7 +150,7 @@ Template.registerHelper 'is_resident_or_user', () ->
 
 Template.registerHelper 'user_is_resident', () -> if @roles and 'resident' in @roles then true else false
 Template.registerHelper 'user_is_owner', () -> if @roles and 'owner' in @roles then true else false
-Template.registerHelper 'user_is_staff', () -> if @roles and 'staff' in @roles then true else false
+Template.registerHelper 'user_is_admin', () -> if @roles and 'staff' in @roles then true else false
 Template.registerHelper 'user_is_user', () -> if @roles and 'user' in @roles then true else false
 Template.registerHelper 'user_is_resident_or_owner', () -> if @roles and _.intersection(@roles,['resident','owner']) then true else false
 
